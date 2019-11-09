@@ -1,3 +1,5 @@
+import 'package:truncate/truncate.dart';
+
 const DEFAULT_OMISSION = '…';
 
 /// Truncation position
@@ -8,7 +10,7 @@ abstract class TruncateStrategy {
   String doTruncate(String text, int maxLength);
 }
 
-/// truncates text to maximum length using the selected strategy
+/// Truncates text to maximum length using the selected strategy
 String truncator(String text, int maxLength, TruncateStrategy strategy) =>
     strategy.doTruncate(text, maxLength);
 
@@ -18,21 +20,15 @@ class CutStrategy implements TruncateStrategy {
       text.length <= maxLength ? text : text.substring(0, maxLength);
 }
 
-/// CutEllipsisStrategy simply truncates the string to the desired length and adds ellipsis at the end
-class CutEllipsisStrategy implements TruncateStrategy {
-  String doTruncate(String text, int maxLength) => truncate(text, maxLength);
-}
+/// OmissionShortenStrategy truncates text up to the maxLength using position and omission
+class OmissionShortenStrategy implements TruncateStrategy {
+  var omission;
+  var position;
 
-/// CutEllipsisLeadingStrategy simply truncates the string from the start the desired length and adds ellipsis at the front
-class CutEllipsisLeadingStrategy implements TruncateStrategy {
-  String doTruncate(String text, int maxLength) =>
-      truncate(text, maxLength, position: TruncatePosition.start);
-}
+  OmissionShortenStrategy({this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
 
-/// EllipsisMiddleStrategy truncates the string to the desired length and adds ellipsis in the middle
-class EllipsisMiddleStrategy implements TruncateStrategy {
   String doTruncate(String text, int maxLength) =>
-      truncate(text, maxLength, position: TruncatePosition.middle);
+    truncate(text, maxLength, omission: this.omission, position: this.position);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string
