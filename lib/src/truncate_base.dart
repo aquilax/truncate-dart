@@ -20,20 +20,19 @@ class CutStrategy implements TruncateStrategy {
 
 /// CutEllipsisStrategy simply truncates the string to the desired length and adds ellipsis at the end
 class CutEllipsisStrategy implements TruncateStrategy {
-  String doTruncate(String text, int maxLength) =>
-	 truncate(text, maxLength);
+  String doTruncate(String text, int maxLength) => truncate(text, maxLength);
 }
 
 /// CutEllipsisLeadingStrategy simply truncates the string from the start the desired length and adds ellipsis at the front
 class CutEllipsisLeadingStrategy implements TruncateStrategy {
   String doTruncate(String text, int maxLength) =>
-	 truncate(text, maxLength, position:TruncatePosition.start);
+      truncate(text, maxLength, position: TruncatePosition.start);
 }
 
 /// EllipsisMiddleStrategy truncates the string to the desired length and adds ellipsis in the middle
 class EllipsisMiddleStrategy implements TruncateStrategy {
   String doTruncate(String text, int maxLength) =>
-	 truncate(text, maxLength, position:TruncatePosition.middle);
+      truncate(text, maxLength, position: TruncatePosition.middle);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string
