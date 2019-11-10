@@ -1,5 +1,6 @@
 import 'package:truncate/truncate.dart';
 
+/// The default omission string is  ellipsis
 const DEFAULT_OMISSION = '…';
 
 /// Truncation position
