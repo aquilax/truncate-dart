@@ -14,45 +14,73 @@ void main() {
       {
         'strategy': CutStrategy(),
         'cases': [
-          makeCase("works with shorter strings", "те", 10, "те"),
-          makeCase("works with exact size strings", "тест", 4, "тест"),
-          makeCase("works with ansi strings", "test", 3, "tes"),
-          makeCase("works with utf8 strings", "тест", 3, "тес"),
+          makeCase('works with shorter strings', 'те', 10, 'те'),
+          makeCase('works with exact size strings', 'тест', 4, 'тест'),
+          makeCase('works with ansi strings', 'test', 3, 'tes'),
+          makeCase('works with utf8 strings', 'тест', 3, 'тес'),
         ]
       },
       {
-        'strategy': OmissionShortenStrategy(position: TruncatePosition.end),
+        'strategy': ShortenStrategy(position: TruncatePosition.end),
         'cases': [
-          makeCase("works with shorter strings", "те", 10, "те"),
-          makeCase("works with exact size strings", "тест", 4, "тест"),
-          makeCase("works with ansi strings", "test", 3, "te…"),
-          makeCase("works with utf8 strings", "тест", 3, "те…"),
+          makeCase('works with shorter strings', 'те', 10, 'те'),
+          makeCase('works with exact size strings', 'тест', 4, 'тест'),
+          makeCase('works with ansi strings', 'test', 3, 'te…'),
+          makeCase('works with utf8 strings', 'тест', 3, 'те…'),
         ],
       },
       {
-        'strategy': OmissionShortenStrategy(position: TruncatePosition.start),
+        'strategy': ShortenStrategy(position: TruncatePosition.start),
         'cases': [
-          makeCase("works with shorter strings", "те", 10, "те"),
-          makeCase("works with exact size strings", "тест", 4, "тест"),
-          makeCase("works with ansi strings", "test", 3, "…st"),
-          makeCase("works with utf8 strings", "тест", 3, "…ст"),
+          makeCase('works with shorter strings', 'те', 10, 'те'),
+          makeCase('works with exact size strings', 'тест', 4, 'тест'),
+          makeCase('works with ansi strings', 'test', 3, '…st'),
+          makeCase('works with utf8 strings', 'тест', 3, '…ст'),
         ],
       },
       {
-        'strategy': OmissionShortenStrategy(position: TruncatePosition.middle),
+        'strategy': ShortenStrategy(position: TruncatePosition.middle),
         'cases': [
-          makeCase("works with shorter strings", "те", 10, "те"),
-          makeCase("works with exact size strings", "тест", 4, "тест"),
-          makeCase("works with ansi strings", "test", 3, "t…t"),
-          makeCase("works with utf8 strings", "тест", 3, "т…т"),
-          makeCase("works with loner strings off cut", "testttest", 5, "te…st"),
-          makeCase("works with loner strings even cut", "testttest", 4, "t…st"),
+          makeCase('works with shorter strings', 'те', 10, 'те'),
+          makeCase('works with exact size strings', 'тест', 4, 'тест'),
+          makeCase('works with ansi strings', 'test', 3, 't…t'),
+          makeCase('works with utf8 strings', 'тест', 3, 'т…т'),
+          makeCase('works with loner strings off cut', 'testttest', 5, 'te…st'),
+          makeCase('works with loner strings even cut', 'testttest', 4, 't…st'),
         ],
       },
       {
-        'strategy': OmissionShortenStrategy(position: TruncatePosition.middle, omission: '....'),
+        'strategy': ShortenStrategy(
+            position: TruncatePosition.middle, omission: '....'),
         'cases': [
-          makeCase("works with long omission strings", "теста", 4, "...."),
+          makeCase('works with long omission strings', 'теста', 4, '....'),
+        ]
+      },
+      {
+        'strategy': ShortenWordStrategy(
+            position: TruncatePosition.end, omission: '...'),
+        'cases': [
+          makeCase('works with long omission strings',
+              'Long text that needs breaking', 28, 'Long text that needs...'),
+        ]
+      },
+      {
+        'strategy': ShortenWordStrategy(
+            position: TruncatePosition.start, omission: '..'),
+        'cases': [
+          makeCase(
+              'works with long omission strings',
+              'Long text that needs breaking',
+              28,
+              '..text that needs breaking'),
+        ]
+      },
+      {
+        'strategy': ShortenWordStrategy(
+            position: TruncatePosition.middle, omission: '..'),
+        'cases': [
+          makeCase('works with long omission strings',
+              'Long text that needs breaking', 25, 'Long text..breaking'),
         ]
       },
     ];
@@ -64,6 +92,7 @@ void main() {
               testCase['text'], testCase['maxLength'], strategCase['strategy']);
           expect(result, equals(testCase['expected']),
               reason: testCase['name']);
+          expect(result.length <= testCase['maxLength'], isTrue);
         });
       }
     }

@@ -3,6 +3,9 @@ import 'package:truncate/truncate.dart';
 /// The default omission string is  ellipsis
 const DEFAULT_OMISSION = '…';
 
+/// The default text terminator is whitespace
+var DEFAULT_TERMINATOR = RegExp(r'\s');
+
 /// Truncation position
 enum TruncatePosition { start, middle, end }
 
@@ -21,15 +24,32 @@ class CutStrategy implements TruncateStrategy {
       text.length <= maxLength ? text : text.substring(0, maxLength);
 }
 
-/// OmissionShortenStrategy truncates text up to the maxLength using position and omission
-class OmissionShortenStrategy implements TruncateStrategy {
-  var omission;
-  var position;
+/// ShortenStrategy truncates text up to the maxLength using position and omission
+class ShortenStrategy implements TruncateStrategy {
+  final String omission;
+  final TruncatePosition position;
 
-  OmissionShortenStrategy({this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
+  ShortenStrategy(
+      {this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
 
   String doTruncate(String text, int maxLength) =>
-    truncate(text, maxLength, omission: this.omission, position: this.position);
+      truncate(text, maxLength, omission: omission, position: position);
+}
+
+/// ShortenStrategy truncates text up to the maxLength using position and omission
+class ShortenWordStrategy implements TruncateStrategy {
+  final String omission;
+  final TruncatePosition position;
+  RegExp terminator;
+
+  ShortenWordStrategy(
+      {this.omission = DEFAULT_OMISSION,
+      this.position = TruncatePosition.end,
+      terminator})
+      : terminator = terminator ?? DEFAULT_TERMINATOR;
+
+  String doTruncate(String text, int maxLength) => truncateWord(text, maxLength,
+      omission: omission, position: position, terminator: terminator);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string
@@ -50,6 +70,31 @@ String truncate(String text, int maxLength,
   }
 }
 
+/// Returns truncated string up to the maxLength at the selected position using the omission string
+/// and breaking only at the terminator position (by default whitespace)
+String truncateWord(String text, int maxLength,
+    {String omission = DEFAULT_OMISSION,
+    TruncatePosition position = TruncatePosition.end,
+    RegExp terminator}) {
+  terminator = terminator ?? DEFAULT_TERMINATOR;
+  if (text.length <= maxLength) {
+    return text;
+  }
+  switch (position) {
+    case TruncatePosition.start:
+      return omission +
+          text.substring(text.indexOf(
+                  terminator, text.length - maxLength + omission.length) +
+              1);
+    case TruncatePosition.middle:
+      return _truncateWordMiddle(text, maxLength, omission, terminator);
+    default:
+      return text.substring(
+              0, text.lastIndexOf(terminator, maxLength - omission.length)) +
+          omission;
+  }
+}
+
 String _truncateMiddle(String text, int maxLength, String omission) {
   final int omissionLength = omission.length;
   final int delta = text.length % 2 == 0
@@ -58,4 +103,16 @@ String _truncateMiddle(String text, int maxLength, String omission) {
   return text.substring(0, delta) +
       omission +
       text.substring(text.length - maxLength + omissionLength + delta);
+}
+
+String _truncateWordMiddle(
+    String text, int maxLength, String omission, RegExp terminator) {
+  final int omissionLength = omission.length;
+  final int delta = text.length % 2 == 0
+      ? ((maxLength - omissionLength) / 2).ceil()
+      : ((maxLength - omissionLength) / 2).floor();
+  String t = text.substring(0, text.lastIndexOf(terminator, delta)) + omission;
+  return t +
+      text.substring(
+          text.indexOf(terminator, text.length - maxLength + t.length) + 1);
 }
