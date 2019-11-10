@@ -1,8 +1,13 @@
 # truncate
 
+[![Build Status](https://travis-ci.com/aquilax/truncate-dart.svg?branch=master)](https://travis-ci.com/aquilax/truncate-dart)
+
+
 String truncation library supporting multiple predefined and custom truncation strategies
 
 ## Usage
+
+You can check out the package on  [pub.dev](https://pub.dev/packages/truncate) or read the [documentation](https://pub.dev/documentation/truncate/latest/) there.
 
 A simple usage example:
 
