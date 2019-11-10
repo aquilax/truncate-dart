@@ -21,7 +21,7 @@ void main() {
         ]
       },
       {
-        'strategy': CutEllipsisStrategy(),
+        'strategy': OmissionShortenStrategy(position: TruncatePosition.end),
         'cases': [
           makeCase("works with shorter strings", "те", 10, "те"),
           makeCase("works with exact size strings", "тест", 4, "тест"),
@@ -30,7 +30,7 @@ void main() {
         ],
       },
       {
-        'strategy': CutEllipsisLeadingStrategy(),
+        'strategy': OmissionShortenStrategy(position: TruncatePosition.start),
         'cases': [
           makeCase("works with shorter strings", "те", 10, "те"),
           makeCase("works with exact size strings", "тест", 4, "тест"),
@@ -39,7 +39,7 @@ void main() {
         ],
       },
       {
-        'strategy': EllipsisMiddleStrategy(),
+        'strategy': OmissionShortenStrategy(position: TruncatePosition.middle),
         'cases': [
           makeCase("works with shorter strings", "те", 10, "те"),
           makeCase("works with exact size strings", "тест", 4, "тест"),
@@ -48,6 +48,12 @@ void main() {
           makeCase("works with loner strings off cut", "testttest", 5, "te…st"),
           makeCase("works with loner strings even cut", "testttest", 4, "t…st"),
         ],
+      },
+      {
+        'strategy': OmissionShortenStrategy(position: TruncatePosition.middle, omission: '....'),
+        'cases': [
+          makeCase("works with long omission strings", "теста", 4, "...."),
+        ]
       },
     ];
 
