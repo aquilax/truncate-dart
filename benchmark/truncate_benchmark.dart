@@ -2,11 +2,8 @@
 import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:truncate/truncate.dart';
 
-List<String> getTestStrings() => ([
-    'hi-diddly-ho there, neighborino',
-    'test',
-    ''
-  ]);
+List<String> getTestStrings() =>
+    (['hi-diddly-ho there, neighborino', 'test', '']);
 
 // Create a new benchmark by extending BenchmarkBase
 class TruncateTemplateBenchmark extends BenchmarkBase {
@@ -26,7 +23,7 @@ class TruncateShortenEndBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for(String text in testStrings) {
+    for (String text in testStrings) {
       truncator(text, 10, ShortenStrategy(position: TruncatePosition.end));
     }
   }
@@ -38,7 +35,7 @@ class TruncateShortenStartBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for(String text in testStrings) {
+    for (String text in testStrings) {
       truncator(text, 10, ShortenStrategy(position: TruncatePosition.start));
     }
   }
@@ -50,7 +47,7 @@ class TruncateShortenMiddleBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for(String text in testStrings) {
+    for (String text in testStrings) {
       truncator(text, 10, ShortenStrategy(position: TruncatePosition.middle));
     }
   }

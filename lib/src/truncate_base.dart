@@ -1,5 +1,3 @@
-import 'package:truncate/truncate.dart';
-
 /// The default omission string is  ellipsis
 const DEFAULT_OMISSION = '…';
 
@@ -26,10 +24,11 @@ class OmissionShortenStrategy implements TruncateStrategy {
   var omission;
   var position;
 
-  OmissionShortenStrategy({this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
+  OmissionShortenStrategy(
+      {this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
 
-  String doTruncate(String text, int maxLength) =>
-    truncate(text, maxLength, omission: this.omission, position: this.position);
+  String doTruncate(String text, int maxLength) => truncate(text, maxLength,
+      omission: this.omission, position: this.position);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string
