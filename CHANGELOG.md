@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Added benchmark
+- Removed unused import
+
 ## 2.0.0
 
 - Simplified interface

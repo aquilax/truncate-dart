@@ -50,7 +50,8 @@ void main() {
         ],
       },
       {
-        'strategy': OmissionShortenStrategy(position: TruncatePosition.middle, omission: '....'),
+        'strategy': OmissionShortenStrategy(
+            position: TruncatePosition.middle, omission: '....'),
         'cases': [
           makeCase("works with long omission strings", "теста", 4, "...."),
         ]
