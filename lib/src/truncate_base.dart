@@ -15,6 +15,7 @@ String truncator(String text, int maxLength, TruncateStrategy strategy) =>
 
 /// CutStrategy cuts the string to the maximum length
 class CutStrategy implements TruncateStrategy {
+  @override
   String doTruncate(String text, int maxLength) =>
       text.length <= maxLength ? text : text.substring(0, maxLength);
 }
@@ -27,8 +28,9 @@ class OmissionShortenStrategy implements TruncateStrategy {
   OmissionShortenStrategy(
       {this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
 
+  @override
   String doTruncate(String text, int maxLength) => truncate(text, maxLength,
-      omission: this.omission, position: this.position);
+      omission: omission, position: position);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string
@@ -50,8 +52,8 @@ String truncate(String text, int maxLength,
 }
 
 String _truncateMiddle(String text, int maxLength, String omission) {
-  final int omissionLength = omission.length;
-  final int delta = text.length % 2 == 0
+  final omissionLength = omission.length;
+  final delta = text.length % 2 == 0
       ? ((maxLength - omissionLength) / 2).ceil()
       : ((maxLength - omissionLength) / 2).floor();
   return text.substring(0, delta) +

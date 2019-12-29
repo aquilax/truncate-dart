@@ -1,4 +1,9 @@
-## 2.0.1
+## 2.1.2
+
+- Fixed tests
+- Fixed linter warnings
+
+## 2.1.1
 
 - Added benchmark
 - Removed unused import

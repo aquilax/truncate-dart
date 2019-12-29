@@ -23,8 +23,9 @@ class TruncateShortenEndBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for (String text in testStrings) {
-      truncator(text, 10, ShortenStrategy(position: TruncatePosition.end));
+    for (var text in testStrings) {
+      truncator(
+          text, 10, OmissionShortenStrategy(position: TruncatePosition.end));
     }
   }
 }
@@ -35,8 +36,9 @@ class TruncateShortenStartBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for (String text in testStrings) {
-      truncator(text, 10, ShortenStrategy(position: TruncatePosition.start));
+    for (var text in testStrings) {
+      truncator(
+          text, 10, OmissionShortenStrategy(position: TruncatePosition.start));
     }
   }
 }
@@ -47,13 +49,14 @@ class TruncateShortenMiddleBenchmark extends BenchmarkBase {
 
   @override
   void run() {
-    for (String text in testStrings) {
-      truncator(text, 10, ShortenStrategy(position: TruncatePosition.middle));
+    for (var text in testStrings) {
+      truncator(
+          text, 10, OmissionShortenStrategy(position: TruncatePosition.middle));
     }
   }
 }
 
-main() {
+void main() {
   TruncateShortenEndBenchmark().report();
   TruncateShortenStartBenchmark().report();
   TruncateShortenMiddleBenchmark().report();

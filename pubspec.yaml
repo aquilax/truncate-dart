@@ -1,6 +1,6 @@
 name: truncate
 description: String truncation library supporting predefined and custom truncation strategies
-version: 2.0.1
+version: 2.1.2
 homepage: https://github.com/aquilax/truncate-dart
 # author: aquilax <aquilax@gmail.com>
 
