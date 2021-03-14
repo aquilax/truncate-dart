@@ -1,4 +1,4 @@
-/// The default omission string is  ellipsis
+/// The default omission string is ellipsis
 const DEFAULT_OMISSION = '…';
 
 /// Truncation position
@@ -22,15 +22,15 @@ class CutStrategy implements TruncateStrategy {
 
 /// OmissionShortenStrategy truncates text up to the maxLength using position and omission
 class OmissionShortenStrategy implements TruncateStrategy {
-  var omission;
-  var position;
+  var omission = DEFAULT_OMISSION;
+  var position = TruncatePosition.end;
 
   OmissionShortenStrategy(
       {this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
 
   @override
-  String doTruncate(String text, int maxLength) => truncate(text, maxLength,
-      omission: omission, position: position);
+  String doTruncate(String text, int maxLength) =>
+      truncate(text, maxLength, omission: omission, position: position);
 }
 
 /// Returns truncated string up to the maxLength at the selected position using the omission string

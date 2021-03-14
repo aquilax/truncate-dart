@@ -1,3 +1,7 @@
+## 3.0.0
+
+- Null safty migration
+
 ## 2.1.2
 
 - Fixed tests

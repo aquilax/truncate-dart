@@ -7,7 +7,7 @@ List<String> getTestStrings() =>
 
 // Create a new benchmark by extending BenchmarkBase
 class TruncateTemplateBenchmark extends BenchmarkBase {
-  List<String> testStrings;
+  List<String> testStrings = [];
 
   TruncateTemplateBenchmark(String name) : super(name);
 
