@@ -64,8 +64,8 @@ void main() {
     for (var strategyCase in cases) {
       for (var testCase in strategyCase.testCases) {
         test(testCase.name, () {
-          var result = truncator(testCase.text as String, testCase.maxLength,
-              strategyCase.strategy);
+          var result = truncator(
+              testCase.text, testCase.maxLength, strategyCase.strategy);
           expect(result, equals(testCase.expected), reason: testCase.name);
         });
       }

@@ -1,6 +1,10 @@
+## 3.0.1
+
+- Updated SDK requiremnents for null safety
+
 ## 3.0.0
 
-- Null safty migration
+- Null safety migration
 
 ## 2.1.2
 
