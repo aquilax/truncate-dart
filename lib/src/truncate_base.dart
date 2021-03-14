@@ -22,8 +22,8 @@ class CutStrategy implements TruncateStrategy {
 
 /// OmissionShortenStrategy truncates text up to the maxLength using position and omission
 class OmissionShortenStrategy implements TruncateStrategy {
-  var omission;
-  var position;
+  var omission = DEFAULT_OMISSION;
+  var position = TruncatePosition.end;
 
   OmissionShortenStrategy(
       {this.omission = DEFAULT_OMISSION, this.position = TruncatePosition.end});
