@@ -1,8 +1,5 @@
 # truncate
 
-[![Build Status](https://travis-ci.com/aquilax/truncate-dart.svg?branch=master)](https://travis-ci.com/aquilax/truncate-dart)
-
-
 String truncation library supporting multiple predefined and custom truncation strategies
 
 ## Usage
@@ -35,5 +32,4 @@ main() {
   print("${truncated} : ${truncated.length} characters");
   // Output: This is a : 9 characters
 }
-
 ```
